@@ -3,11 +3,11 @@ import numpy as np
 import os
 
 #list of string from 0 to 50
-x = list(str(y).zfill(2) for y in range(6))
+x = list(str(y).zfill(2) for y in range(51))
 
 if not os.path.exists("gesture"):
     os.makedirs("gesture")
-    for i in range(6):
+    for i in range(51):
         mode = str(i).zfill(2)
         os.makedirs("gesture/"+mode+"/")
     
