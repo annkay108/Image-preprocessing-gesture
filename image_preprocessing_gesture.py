@@ -3,12 +3,12 @@ import numpy as np
 import os
 
 #list of string from 0 to 50
-x = list(str(y) for y in range(51))
+x = list(str(y).zfill(2) for y in range(6))
 
 if not os.path.exists("gesture"):
     os.makedirs("gesture")
-    for i in range(51):
-        mode = str(i)
+    for i in range(6):
+        mode = str(i).zfill(2)
         os.makedirs("gesture/"+mode+"/")
     
 def nothing(x):
@@ -64,14 +64,18 @@ while True:
     # cv2.imshow("erosion",erosion)
     cv2.imshow("median",median)
 
-    key = cv2.waitKey(1) & 0xFF
-
-    if key & 0xFF == 27: # esc key
+    key1 = cv2.waitKey(1) & 0xFF
+    
+    if key1 & 0xFF == 27: # esc key
         break
-
-    if chr(key) in x: # check if the key is in x or not
-        cv2.imwrite("gesture/"+chr(key)+"/"+str(len(os.listdir("gesture/"+chr(key)+"/"))+1)+".jpg",median)
-        print(chr(key))
+    if key1!=255:
+        key2 = cv2.waitKey(0) & 0xFF
+        print(key2)
+        key = chr(key1)+chr(key2)
+        print(key)
+        if key in x: # check if the key is in x or not
+            cv2.imwrite("gesture/"+key+"/"+str(len(os.listdir("gesture/"+key+"/"))+1)+".jpg",median)
+            print(key)
 
 cap.release()
 cv2.destroyAllWindows()
